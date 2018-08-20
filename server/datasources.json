@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongo_db": {
+    "host": "${MONGO_HOST}",
+    "port": "${MONGO_PORT}",
+    "url": "",
+    "database": "${MONGO_DATABASE}",
+    "username": "${MONGO_USERNAME}",
+    "password": "${MONGO_PASSWORD}",
+    "name": "mongo_db",
+    "connector": "mongodb",
+    "allowExtendedOperators": true
+  }
+}
