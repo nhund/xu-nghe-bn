@@ -36,7 +36,19 @@
     "dataSource": "mongo_db",
     "public": false
   },
+  "category": {
+    "dataSource": "mongo_db",
+    "public": true
+  },
   "Users": {
+    "dataSource": "mongo_db",
+    "public": true
+  },
+  "product": {
+    "dataSource": "db",
+    "public": true
+  },
+  "news": {
     "dataSource": "mongo_db",
     "public": true
   }

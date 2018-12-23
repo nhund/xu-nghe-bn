@@ -1,5 +1,6 @@
 'use strict';
 var app = require('../../server/server');
+var ct = require('../models/util/constants');
 const SALT_WORK_FACTOR = 10;
 var bcrypt = require('bcryptjs');
 
@@ -26,8 +27,7 @@ module.exports = function (Users) {
         Users.checkExsitUser(email, phone, username).
             then(function (result) {
                 if (result) {
-                    console.log('result the user esxited ')
-                    cb(null, 201, 'fail', 'the user existed');
+                    cb(null, ct.HTTP_STATUS_ERROR, ct.MESSAGE_GET_FAILED, 'the user existed');
                 } else {
                     let infoUser = {}
                     infoUser['fullName'] = fullName;
@@ -52,10 +52,10 @@ module.exports = function (Users) {
                     });
                 }).then(function (token) {
                     user.access_token = token.id;
-                    cb(null, 200, 'successful', user);
+                    cb(null, ct.HTTP_STATUS_OK, ct.MESSAGE_GET_SUCCESS, user);
                 })
             }).catch(err => {
-                cb(null, 201, 'failed', err);
+                cb(null,ct.HTTP_STATUS_ERROR, ct.MESSAGE_GET_FAILED, err);
             });
     };
 
@@ -143,30 +143,28 @@ module.exports = function (Users) {
             defaultError.statusCode = 401;
             defaultError.code = 'LOGIN_FAILED';
 
-        if(username == null){
-            cb(null, 201, 'the field username required', 'the field username required');
-        }
-        if(password == null){
-            cb(null, 201, 'the field password required', 'the field password required');
+        if(username == null || password == null){
+            cb(null,ct.HTTP_STATUS_ERROR, ct.MSG_INVALID_USER_INFO, 'the field username and password  required');
         }
         this.findOne({where:{or:[{username: username}, {email: username}]}}, function(err, user){
             if (err) {
-                cb(null, 201, 'the field password errr', err);
+                cb(null,ct.HTTP_STATUS_ERROR, ct.MSG_INVALID_USER_INFO, err);
             } else if (user) {
                 Users.encodePassword(password, user.password, function (err, isMatch) {
                     if (err) {
-                        cb(null, 201, 'the password not match', err);
+                        cb(null, ct.MSG_INVALID_USER_INFO, ct.MESSAGE_GET_FAILED, err);
                     } else if (isMatch) {
                         let tokenData = {};
                         tokenData.userId = user.id;
                         Users.createAccessToken(tokenData, user)
                             .then(function(result){
-                                cb(null, 200, 'the  login successful', result);
+                                result.user_id = user.id;
+                                cb(null,ct.HTTP_STATUS_OK, ct.MSG_LOGIN_SUCCESS, result);
                             }).catch((err)=>{
-                                cb(null, 201, 'the login failed', err );
+                                cb(null,ct.HTTP_STATUS_ERROR, ct.MSG_INVALID_USER_INFO, err );
                             })
                     }else{
-                        cb(null, 201, 'the password not match', 'the password not match');
+                        cb(null,ct.HTTP_STATUS_ERROR, ct.MSG_INVALID_USER_INFO, 'the password not match');
                     }
                 })
             }

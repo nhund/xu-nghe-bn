@@ -3,11 +3,11 @@
   "plural": "Users",
   "base": "Model",
   "idInjection": true,
-  "mongodb": {
-    "collection": "users"
-  },
   "options": {
     "validateUpsert": true
+  },
+  "mongodb": {
+    "collection": "users"
   },
   "properties": {
     "username": {
@@ -58,6 +58,7 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "add"
-    }],
+    }
+  ],
   "methods": {}
 }

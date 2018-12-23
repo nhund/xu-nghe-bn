@@ -1,0 +1,87 @@
+{
+  "name": "news",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": { 
+    "id": {
+      "type": "number",
+      "autoIncrement": true,
+      "primaryKey": true,
+      "allowNull": false,
+      "unique": true
+  },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "string",
+      "required": true
+    },
+    "photo": {
+      "type": "array",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": true,
+      "default": "0"
+    },
+    "keywords": {
+      "type": "string",
+      "required": true,
+      "default": "0"
+    },
+    "category": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "getUser":{
+      "type": "belongsTo",
+      "model": "Users",
+      "foreignKey": "user_id"
+    }
+  },
+  "acls": [ {
+    "accessType": "*",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "DENY"
+  },
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "createNews"
+  },
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "getById"
+  },
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "getListAll"
+  },
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW",
+    "property": "updateById"
+  }
+],
+  "methods": {}
+}

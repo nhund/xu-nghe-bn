@@ -1,0 +1,54 @@
+{
+  "name": "product",
+  "plural": "Users",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "number",
+      "required": true
+    },
+    "sale": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string"
+    },
+    "thumbnails": {
+      "type": [
+        "string"
+      ]
+    },
+    "user_id": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "date",
+      "required": true
+    },
+    "updated_at": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
